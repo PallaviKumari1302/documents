@@ -1,0 +1,55 @@
+import java.io.Serializable;
+
+public class GFG implements Serializable, Cloneable{
+
+    @Override
+    protected Object clone() throws CloneNotSupportedException{ 
+        return super.clone();
+    }
+    
+}
+
+
+
+public class Main {
+
+    //ways to create object
+    public static void main(String [] args) throws Exception{
+
+        // using new Keyword
+        GFG obj1 = new GFG();
+        System.out.println("obj1 : " +obj1.hashCode());
+
+        // using new instance
+        Class cls = Class.forName("GFG"); //load class in java
+        GFG obj2 = (GFG) cls.newInstance(); //to create object
+        System.out.println("obj2 : " +obj2.hashCode());
+
+        // using clone method
+        GFG obj3 = new GFG();
+        GFG obj4 = (GFG)obj3.clone();
+        System.out.println("obj3 : " +obj3.hashCode());
+        System.out.println("obj4 : " +obj4.hashCode());
+
+        // using newInstance() method of constructor class
+
+        Constructor<GFG> constructor = GFG.class.getDeclaredConstructor();
+        GFG obj5 =(GFG) constructor.newInstance();
+        System.out.println("obj5 : " +obj5.hashCode());
+
+        // using deserialization
+        GFG obj6 = new GFG();
+        FileOutputStream f = new FileOutputStream("file.txt");
+        ObjectOutputStream oos = new ObjectOutputStream(f);
+        oos.writeObject(obj6);
+        oos.close();
+        f.close();
+
+        FileInputStream fileInputStream = new FileInputStream("file.txt");
+        ObjectInputStream ooInputStream = new ObjectInputStream(fileInputStream);
+        GFG obj7 = (GFG) ooInputStream.readObject();
+        System.out.println("obj6 : " +obj6.hashCode());
+        System.out.println("obj7 : " +obj7.hashCode());
+    
+    }
+}
